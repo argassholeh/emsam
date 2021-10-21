@@ -1,6 +1,8 @@
 package com.sholeh.emsam.Api;
 
 
+import com.sholeh.emsam.Model.ResponseKaryawan;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -13,4 +15,7 @@ public interface BaseApiService {
     @POST("login.php")
     Call<ResponseBody> loginRequest(@Field("username") String username,
                                     @Field("password") String password);
+
+    @GET("tampil-karyawan.php")
+    Call<ResponseKaryawan> getKaryawan();
 }

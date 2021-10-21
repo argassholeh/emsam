@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!--        <include layout="@layout/toolbar_fragment"/>-->
+        <include layout="@layout/toolbar_fragment"/>
 
         <com.google.android.material.appbar.AppBarLayout
             android:visibility="gone"
@@ -33,15 +33,46 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
+
+
             <LinearLayout
-                android:id="@+id/lnseacrh"
+                android:layout_below="@+id/lnseacrh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
                 android:orientation="vertical">
 
 
 
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+                    <ProgressBar
+                        android:id="@+id/myProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:indeterminateBehavior="cycle"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginBottom="45dp"
+                        android:layout_below="@+id/myProgressBar"
+                        android:id="@+id/recycler_karyawan"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:verticalSpacing="10dp"
+                        android:horizontalSpacing="10dp"/>
+
+
+
+                </RelativeLayout>
 
 
             </LinearLayout>
