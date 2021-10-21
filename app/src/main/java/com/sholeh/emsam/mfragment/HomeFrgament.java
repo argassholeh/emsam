@@ -55,10 +55,10 @@ public class HomeFrgament extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home,container,false);
 
-        imgtoolbar = rootView.findViewById(R.id.imgtoolbarFBack);
-        tvx_title = rootView.findViewById(R.id.tvx_title);
-        tvx_logout = rootView.findViewById(R.id.logout_akun);
-        rv_karyawan = rootView.findViewById(R.id.recycler_karyawan);
+            imgtoolbar = rootView.findViewById(R.id.imgtoolbarFBack);
+            tvx_title = rootView.findViewById(R.id.tvx_title);
+            tvx_logout = rootView.findViewById(R.id.logout_akun);
+            rv_karyawan = rootView.findViewById(R.id.recycler_karyawan);
 
         tvx_title.setText("Data Karyawan");
         tvx_title.setTypeface(tvx_title.getTypeface(), Typeface.BOLD);

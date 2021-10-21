@@ -14,9 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EMSAM"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ActivityDetailKaryawan"></activity>
         <activity
             android:name=".ActivityUtama"
-            android:label="@string/title_activity_utama"></activity>
+            android:label="@string/title_activity_utama" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ActivityLogin">
             <intent-filter>
