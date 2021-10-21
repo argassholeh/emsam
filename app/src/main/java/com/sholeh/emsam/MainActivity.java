@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         preferences = new Preferences(this);
         ApiService = UrlApi.getAPIService();
 
-        cekUser();
+//        cekUser();
     }
 
     private void cekUser(){

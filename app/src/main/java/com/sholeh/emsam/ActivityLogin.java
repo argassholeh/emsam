@@ -64,7 +64,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         preferences = new Preferences(this);
         if (preferences.getSPSudahLogin()) {
             this.finish();
-            startActivity(new Intent(ActivityLogin.this, MainActivity.class)
+            startActivity(new Intent(ActivityLogin.this, ActivityUtama.class)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
 
         }
@@ -211,7 +211,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
     private void openUtama(String idPengguna, String status) {
 //        if (preferences.getSPStatus().equalsIgnoreCase("admin")) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ActivityUtama.class);
         intent.putExtra(preferences.SP_IdPengguna, idPengguna);
         intent.putExtra(preferences.SP_STATUS, status);
         startActivity(intent);

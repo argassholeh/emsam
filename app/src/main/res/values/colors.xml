@@ -16,6 +16,8 @@
     <color name="colorPrimaryDarkk">#246C8C</color>
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorAccentt">#03DAC5</color>
+    <color name="colorWhite">#81FFFFFF</color>
+
 
     <color name="transparent">#00FFFFFF</color>
     <color name="gray">#FAFAFA</color>
