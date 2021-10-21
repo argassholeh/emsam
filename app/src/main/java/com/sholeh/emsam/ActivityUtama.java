@@ -3,6 +3,7 @@ package com.sholeh.emsam;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ public class ActivityUtama extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utama);
+        getSupportActionBar().hide();
         preferences = new Preferences(this);
         ApiService = UrlApi.getAPIService();
 

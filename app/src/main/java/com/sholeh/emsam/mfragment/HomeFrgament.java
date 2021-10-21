@@ -21,6 +21,9 @@ import com.sholeh.emsam.R;
 
 public class HomeFrgament extends Fragment {
 
+    TextView tvx_title;
+    ImageView imgtoolbar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
