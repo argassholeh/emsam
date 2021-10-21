@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/bg_shape.xml" value="0.2755208333333333" />
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/ic_baseline_fastfood_24.xml" value="0.2755208333333333" />
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/profile_back_button.xml" value="0.2755208333333333" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/activity_profil.xml" value="0.259375" />
-        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/content_profile.xml" value="0.259375" />
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/content_profile.xml" value="0.2" />
       </map>
     </option>
   </component>

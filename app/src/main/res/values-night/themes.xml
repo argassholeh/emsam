@@ -22,9 +22,5 @@
         <item name="colorControlHighlight">#BE0404</item>
         <item name="colorButtonNormal">#DD1B1B</item>
     </style>
-    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/line_gray</item>
-        <item name="colorControlActivated">#e4e4e4</item>
-        <item name="colorControlHighlight">@color/line_gray</item>
-    </style>
+
 </resources>
