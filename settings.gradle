@@ -1,0 +1,2 @@
+rootProject.name = "EMSAM"
+include ':app'
