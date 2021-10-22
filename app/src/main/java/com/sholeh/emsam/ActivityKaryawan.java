@@ -298,6 +298,7 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
                 pDialog.dismissWithAnimation();
                 if (response.body().getMessage().equalsIgnoreCase("Berhasil di ubah")) {
                     pDialog.dismissWithAnimation();
+                    Toast.makeText(ActivityKaryawan.this, "Berhasil di ubah", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(ActvityKaryawan.this, FragmentMainRegister.class);
 //                    intent.putExtra("idnik", nik);
 //                    startActivity(intent);

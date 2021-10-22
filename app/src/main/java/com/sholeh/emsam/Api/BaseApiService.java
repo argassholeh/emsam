@@ -44,4 +44,23 @@ public interface BaseApiService {
                                       @Field("no_hp") String nohp,
                                       @Field("alamat") String alamaat);
 
+    @FormUrlEncoded
+    @POST("simpan-karyawan.php")
+    Call<ResponseServer> simpanKaryawan(@Field("nama_pekerja") String namaPekerja,
+                                      @Field("id_jabatan") String idJabatan,
+                                      @Field("tgl_mulaitugas") String tglMulaiTugas,
+                                      @Field("ttl") String ttl,
+                                      @Field("kartu_pengenal") String kartuPengenal,
+                                      @Field("nomor_pengenal") String nomorPengenal,
+                                      @Field("agama") String agama,
+                                      @Field("jenis_kelamin") String jk,
+                                      @Field("status") String status,
+                                      @Field("level") String level,
+                                      @Field("pendidikan") String pendidikan,
+                                      @Field("keterampilan") String keterampilan,
+                                      @Field("no_bpjskesehatan") String nobpjsKesehatan,
+                                      @Field("no_bpjsketenagakerjaan") String nobpjsKetenaga,
+                                      @Field("no_hp") String nohp,
+                                      @Field("alamat") String alamaat);
+
 }

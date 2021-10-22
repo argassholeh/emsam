@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,11 +23,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.developer.kalert.KAlertDialog;
 import com.sholeh.emsam.ActivityKaryawan;
 import com.sholeh.emsam.Adapter.adapterspin;
 import com.sholeh.emsam.Api.BaseApiService;
 import com.sholeh.emsam.Api.UrlApi;
 import com.sholeh.emsam.Model.ResponseJabatan;
+import com.sholeh.emsam.Model.ResponseServer;
 import com.sholeh.emsam.R;
 
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class TambahFrgament extends Fragment {
+public class TambahFrgament extends Fragment implements View.OnClickListener {
 
 
     TextView tvx_title, tvx_logout;
@@ -45,7 +48,7 @@ public class TambahFrgament extends Fragment {
             edbpjsKesehatan, edbpjsKetenagakerjaan, edalamat;
     Spinner spinJabatan, spinKartuPengenal, spinAgama, spinStatus, spinLevel;
     ImageView img_detail, imgtoolbar;
-    Button btn_cetak;
+    Button btn_cetak, btnSimpan;
     String id_user, nama, username, jabatan, tgltugas, ttl, pengenal, nopengenal, status, nohp, alamat, foto,
             idjabatan, agama, jk, level, pendidikan, keterampilan, nobpjskesehatan, nobpjsketenaga;
     RadioButton rbL, rbP;
@@ -57,6 +60,8 @@ public class TambahFrgament extends Fragment {
     ArrayList<String> listAgama = new ArrayList<>();
     ArrayList<String> listStatus = new ArrayList<>();
     ArrayList<String> listLevel = new ArrayList<>();
+    KAlertDialog pDialog;
+
 
     @Nullable
     @Override
@@ -68,6 +73,7 @@ public class TambahFrgament extends Fragment {
         ApiService = UrlApi.getAPIService();
 
 
+        btnSimpan = rootView.findViewById(R.id.btnSimpan);
         spinKartuPengenal = rootView.findViewById(R.id.spin_kartu);
         spinJabatan = rootView.findViewById(R.id.spin_jabatan);
         spinAgama = rootView.findViewById(R.id.spinagama);
@@ -99,6 +105,8 @@ public class TambahFrgament extends Fragment {
         isiAgama();
         isilevel();
         isistatus();
+
+        btnSimpan.setOnClickListener(this);
 
         return rootView;
     }
@@ -171,5 +179,155 @@ public class TambahFrgament extends Fragment {
         spinLevel.setAdapter(adapterStatus);
     }
 
+    private void sendData() {
+        nama = edNama.getText().toString();
+        jabatan = spinJabatan.getSelectedItem().toString();
+        tgltugas = edTglTugas.getText().toString();
+        ttl = edtttl.getText().toString();
+        nopengenal = edNoPengenal.getText().toString();
+        pendidikan = edPendidikan.getText().toString();
+        keterampilan = edKeterampilan.getText().toString();
+        nobpjskesehatan = edbpjsKesehatan.getText().toString();
+        nobpjsketenaga = edbpjsKetenagakerjaan.getText().toString();
+        nohp = ednohp.getText().toString();
+        alamat = edalamat.getText().toString();
+
+        spinJabatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinJabatan.getSelectedItem().equals("Pillih Jabatan")) {
+
+                } else {
+//                    getCity(listID_prov.get(position));
+//                    namaProvinsi = spinProvinsi.getSelectedItem().toString();
+//                    Toast.makeText(AddWargaActivity.this, "id: " + listID_kelurahan.get(position) + " kelurahan: " + spinKelurahan.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if (nama.isEmpty()) {
+            pDialog = new KAlertDialog(getActivity(), KAlertDialog.ERROR_TYPE);
+            pDialog.setTitleText("Oops...");
+            pDialog.setContentText("Harap masukkan data dengan benar! ");
+            pDialog.show();
+            Thread timer = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        sleep(1500);
+                        pDialog.cancel();
+                        super.run();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            };
+            timer.start();
+        } else {
+            requestUpdate();
+        }
+    }
+
+
+    private void requestUpdate() {
+        pDialog = new KAlertDialog(getActivity(), KAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        agama = spinAgama.getSelectedItem().toString();
+        status = spinStatus.getSelectedItem().toString();
+        level = spinLevel.getSelectedItem().toString();
+        pengenal = spinKartuPengenal.getSelectedItem().toString();
+        if (rbL.isChecked()) {
+            jk = "L";
+        }else{
+            jk = "P";
+        }
+        final String idjabatan_ = listID_jabatan.get(spinJabatan.getSelectedItemPosition());
+        ApiService.simpanKaryawan( nama, idjabatan_, tgltugas, ttl, pengenal, nopengenal, agama, jk, status,level, pendidikan,
+                keterampilan, nobpjskesehatan, edbpjsKetenagakerjaan.getText().toString(), nohp, alamat
+        ).enqueue(new Callback<ResponseServer>() {
+            @Override
+            public void onResponse(Call<ResponseServer> call, Response<ResponseServer> response) {
+                pDialog.dismissWithAnimation();
+                if (response.body().getMessage().equalsIgnoreCase("Berhasil di tambah")) {
+                    pDialog.dismissWithAnimation();
+                    Toast.makeText(getActivity(), "Berhasil di simpan", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(ActvityKaryawan.this, FragmentMainRegister.class);
+//                    intent.putExtra("idnik", nik);
+//                    startActivity(intent);
+//                    getActivity().finish();
+                }else   if (response.body().getMessage().equalsIgnoreCase("Nomor Pengenal Sudah Terdaftar")) {
+
+                } else {
+                    pDialog.dismissWithAnimation();
+                    pDialog.dismissWithAnimation();
+                    pDialog = new KAlertDialog(getActivity(), KAlertDialog.ERROR_TYPE);
+                    pDialog.setTitleText("Oops...");
+                    pDialog.setContentText("Terjadi kesalahan dalam proses penambahan anggota, silahkan coba beberapa saat lagi.");
+                    pDialog.show();
+                    Thread timer = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                sleep(1500);
+                                pDialog.cancel();
+                                super.run();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    };
+                    timer.start();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseServer> call, Throwable t) {
+                pDialog.dismissWithAnimation();
+                pDialog = new KAlertDialog(getActivity(), KAlertDialog.ERROR_TYPE);
+                pDialog.setTitleText("Oops...");
+                pDialog.setContentText("Koneksi internet bermasalah!");
+                pDialog.show();
+                Thread timer = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            sleep(1500);
+                            pDialog.cancel();
+                            super.run();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                timer.start();
+            }
+        });
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSimpan:
+               sendData();
+                break;
+
+
+            default:
+                break;
+        }
+    }
 }
 
