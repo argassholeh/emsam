@@ -218,7 +218,7 @@ public class ProfilFrgament extends Fragment {
 
             //font setting
             BaseColor colorAccent = new BaseColor(0, 153, 204, 255);
-            float fontSize = 20.0f;
+            float fontSize = 15.0f;
             float valueFontSize = 26.0f;
 
 
