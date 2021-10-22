@@ -309,28 +309,28 @@ public class ProfilFrgament extends Fragment {
             addLineSeperator(document);
 
 
-            //add product order detail
-            addLineSpace(document);
-            addNewItem(document, "Product Detail", Element.ALIGN_CENTER, titleFont);
-            addLineSeperator(document);
-
-            //item
-            addNewItemWithLeftAndRight(document, "Kentang", "(0.0%)", titleFont, orderNumberValueFont);
-            addNewItemWithLeftAndRight(document, "12.000*10000", "12.0000.0", titleFont, orderNumberValueFont);
-
-            addLineSeperator(document);
-
-            //itemkedua
-            addNewItemWithLeftAndRight(document, "BABUL Khoir", "(0.0%)", titleFont, orderNumberValueFont);
-            addNewItemWithLeftAndRight(document, "12.000*10000", "12.0000.0", titleFont, orderNumberValueFont);
-
-            addLineSeperator(document);
-
-            //total
-            addLineSpace(document);
-            addLineSpace(document);
-
-            addNewItemWithLeftAndRight(document, "Total", "22.0000.0", titleFont, orderNumberValueFont);
+//            //add product order detail
+//            addLineSpace(document);
+//            addNewItem(document, "Product Detail", Element.ALIGN_CENTER, titleFont);
+//            addLineSeperator(document);
+//
+//            //item
+//            addNewItemWithLeftAndRight(document, "Kentang", "(0.0%)", titleFont, orderNumberValueFont);
+//            addNewItemWithLeftAndRight(document, "12.000*10000", "12.0000.0", titleFont, orderNumberValueFont);
+//
+//            addLineSeperator(document);
+//
+//            //itemkedua
+//            addNewItemWithLeftAndRight(document, "BABUL Khoir", "(0.0%)", titleFont, orderNumberValueFont);
+//            addNewItemWithLeftAndRight(document, "12.000*10000", "12.0000.0", titleFont, orderNumberValueFont);
+//
+//            addLineSeperator(document);
+//
+//            //total
+//            addLineSpace(document);
+//            addLineSpace(document);
+//
+//            addNewItemWithLeftAndRight(document, "Total", "22.0000.0", titleFont, orderNumberValueFont);
 
             document.close();
 
