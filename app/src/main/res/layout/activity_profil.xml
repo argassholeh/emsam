@@ -61,7 +61,7 @@
             android:layout_height="match_parent"
             android:padding="30dp">
 
-            <include layout="@layout/content_profile"/>
+          <include layout="@layout/content_profile"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -80,6 +80,17 @@
         android:layout_marginRight="16dp"
         android:backgroundTint="#03A9F4"/>
 
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb_print"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAlignBottom="false"
+        android:clickable="true"
+        android:src="@drawable/ic_download"
+        app:fabSize="normal"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="start|bottom"
+        android:layout_marginLeft="16dp"
+        android:backgroundTint="#03A9F4"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
