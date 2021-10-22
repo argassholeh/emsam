@@ -81,7 +81,7 @@ public class AdapterKaryawan extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((KaryawanItemView) holder).tvxNoHP.setText(kontak);
 
 
-        if (model.getFoto().isEmpty()){
+        if (model.getFoto().isEmpty() ){
             Log.i("Informasi", model.getFoto() + " : Foto tidak ditemukan");
             ((KaryawanItemView) holder).image_profil.setImageResource(R.mipmap.no_image);
         } else {

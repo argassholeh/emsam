@@ -20,7 +20,8 @@
             android:label="@string/title_activity_utama" />
         <activity android:name=".ActivityKaryawan" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ActivityLogin">
+        <activity android:name=".ActivityLogin" />
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
