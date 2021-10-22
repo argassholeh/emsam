@@ -56,6 +56,7 @@ public class HomeFrgament extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home,container,false);
 
             imgtoolbar = rootView.findViewById(R.id.imgtoolbarFBack);
+            imgtoolbar.setVisibility(View.GONE);
             tvx_title = rootView.findViewById(R.id.tvx_title);
             tvx_logout = rootView.findViewById(R.id.logout_akun);
             rv_karyawan = rootView.findViewById(R.id.recycler_karyawan);

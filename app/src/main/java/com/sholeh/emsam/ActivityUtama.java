@@ -116,7 +116,7 @@ public class ActivityUtama extends AppCompatActivity {
 
     private void cekUser(){
         if(preferences.getSPStatus().equalsIgnoreCase("admin")){
-            Toast.makeText(this, "admin", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "admin", Toast.LENGTH_SHORT).show();
             aksesTambah = true;
             HomeFrgament homeFrgament = new HomeFrgament();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main_id, homeFrgament).commit();
@@ -127,7 +127,7 @@ public class ActivityUtama extends AppCompatActivity {
             imgNavHome.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite)));
 
         }else {
-            Toast.makeText(this, "user", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "user", Toast.LENGTH_SHORT).show();
             fab_add.setVisibility(View.VISIBLE);
             ln_home.setVisibility(View.GONE);
             ln_profil.setVisibility(View.GONE);

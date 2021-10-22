@@ -197,6 +197,14 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
                 tampilkameradialog();
                 idfoto = "1";
                 break;
+
+            case R.id.imgtoolbarFBack:
+                finish();
+                break;
+
+            case R.id.tvBatal:
+                finish();
+                break;
             default:
                 break;
 

@@ -82,7 +82,6 @@ public class TambahFrgament extends Fragment implements View.OnClickListener {
         tvx_logout.setVisibility(View.GONE);
         ApiService = UrlApi.getAPIService();
 
-
         btnSimpan = rootView.findViewById(R.id.btnSimpan);
         spinKartuPengenal = rootView.findViewById(R.id.spin_kartu);
         spinJabatan = rootView.findViewById(R.id.spin_jabatan);
@@ -104,6 +103,7 @@ public class TambahFrgament extends Fragment implements View.OnClickListener {
 
 
         imgtoolbar = rootView.findViewById(R.id.imgtoolbarFBack);
+        imgtoolbar.setVisibility(View.GONE);
         tvx_title = rootView.findViewById(R.id.tvx_title);
         tvx_title.setText("Tambah Karyawan");
         tvx_title.setTypeface(tvx_title.getTypeface(), Typeface.BOLD);

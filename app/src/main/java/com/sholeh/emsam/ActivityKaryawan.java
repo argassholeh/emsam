@@ -146,6 +146,7 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
         isistatus();
         btnUpdate.setOnClickListener(this);
         edTglTugas.setOnClickListener(this);
+        imgtoolbar.setOnClickListener(this);
     }
 
     @Override
@@ -159,7 +160,9 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
             case R.id.edtglTugas:
                 showDateDialog();
                 break;
-
+            case R.id.imgtoolbarFBack:
+                finish();
+                break;
 
 
             default:
