@@ -429,6 +429,7 @@ public class ProfilFrgament extends Fragment {
     }
 
     private void getDataProfil() {
+        Toast.makeText(getContext(), "data profil", Toast.LENGTH_SHORT).show();
         ApiService.tampilProfil(preferences.getSP_IdPengguna()).enqueue(new Callback<ResponseProfil>() {
             @Override
             public void onResponse(Call<ResponseProfil> call, Response<ResponseProfil> response) {
