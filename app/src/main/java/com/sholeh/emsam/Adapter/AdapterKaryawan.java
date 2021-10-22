@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sholeh.emsam.Api.UrlApi.BASE_URL_HOSTING;
 
-import static com.sholeh.emsam.Api.UrlApi.BASE_URL_API;
 
 public class AdapterKaryawan extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -85,7 +85,7 @@ public class AdapterKaryawan extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Log.i("Informasi", model.getFoto() + " : Foto tidak ditemukan");
             ((KaryawanItemView) holder).image_profil.setImageResource(R.mipmap.no_image);
         } else {
-            Picasso.get().load(BASE_URL_API + "assets/foto_karyawan/" + model.getFoto()).into(((KaryawanItemView) holder).image_profil);
+            Picasso.get().load(BASE_URL_HOSTING  + "assets/foto_karyawan/" + model.getFoto()).into(((KaryawanItemView) holder).image_profil);
         }
 
 
@@ -115,7 +115,7 @@ public class AdapterKaryawan extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 intent.putExtra("status", model.getStatus());
                 intent.putExtra("nohp", model.getNoHp());
                 intent.putExtra("alamat", String.valueOf(model.getAlamat()));
-                intent.putExtra("foto_karyawan", BASE_URL_API + "assets/foto_karyawan/" + model.getFoto());
+                intent.putExtra("foto_karyawan", BASE_URL_HOSTING + "assets/foto_karyawan/" + model.getFoto());
                 context.startActivity(intent);
             }
         });

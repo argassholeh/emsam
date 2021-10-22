@@ -66,7 +66,6 @@ public interface BaseApiService {
 
     @FormUrlEncoded
     @POST("upload-foto.php")
-    Call<ResponseBody> simpanFotoBaru(@Field("id_user") String mId,
-                                          @Field("foto") String mPoster);
+    Call<ResponseBody> simpanFotoBaru(@Field("id_user") String mId);
 
 }

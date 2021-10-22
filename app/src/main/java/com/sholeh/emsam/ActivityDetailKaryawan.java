@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.developer.kalert.KAlertDialog;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.sholeh.emsam.Api.BaseApiService;
 
 import java.io.ByteArrayOutputStream;
@@ -56,7 +57,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
     TextView tvx_title, tvx_logout, tvx_print, tvx_download, tvx_batal, tvx_ubah, tvx_username, tvx_pengenal;
     EditText tvx_nama, tvx_jabatan, tvx_tglMulaiTugas,
             tvx_ttl, tvx_nopengenal, tvx_status, tvx_nohp, tvx_alamat, etPoster;
-    ImageView img_detail, imgchange, imgtoolbar;
+    ImageView imgchange, imgtoolbar;
     Button btn_cetak;
     String id_user, idfoto,  nama, username, jabatan, tgltugas, ttl, pengenal, nopengenal, status, nohp, alamat, foto,
     idjabatan, agama, jk, level, pendidikan, keterampilan, nobpjskesehatan, nobpjsketenaga;
@@ -68,6 +69,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
     private final int TAKE_PICTURE = 6352;
     private static final int REQUEST_CAMERA_ACCESS_PERMISSION = 5674;
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
+    private RoundedImageView riv_foto;
 
 
     @Override
@@ -103,7 +105,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         tvx_status = findViewById(R.id.tv_status);
         tvx_nohp = findViewById(R.id.tv_nohp);
         tvx_alamat = findViewById(R.id.tv_alamat);
-        img_detail = findViewById(R.id.img_detailfoto);
+        riv_foto = findViewById(R.id.img_detailfoto);
 
         id_user = getIntent().getStringExtra("id_user");
         idjabatan = getIntent().getStringExtra("id_jabatan");
@@ -140,7 +142,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         Glide.with(ActivityDetailKaryawan.this)
                 .load(foto)
                 .apply(new RequestOptions().placeholder(R.mipmap.no_image).centerCrop())
-                .into(img_detail);
+                .into(riv_foto);
 
 
         tvx_ubah.setOnClickListener(this);
@@ -149,7 +151,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         tvx_download.setOnClickListener(this);
         imgtoolbar.setOnClickListener(this);
         imgchange.setOnClickListener(this);
-        img_detail.setOnClickListener(this);
+        riv_foto.setOnClickListener(this);
     }
 
     @Override
@@ -185,11 +187,15 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imgchange:
-                kegiatanFoto();
+//                kegiatanFoto();
+                tampilkameradialog();
+                idfoto = "1";
                 break;
 
             case R.id.img_detailfoto:
-                kegiatanFoto();
+//                kegiatanFoto();
+                tampilkameradialog();
+                idfoto = "1";
                 break;
             default:
                 break;
@@ -238,8 +244,8 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         pDialog.setCancelable(false);
         pDialog.show();
 
-        String mPoster = convertToString();
-        ApiService.simpanFotoBaru(id_user, mPoster).enqueue(new Callback<ResponseBody>() {
+//        String mPoster = convertToString();
+        ApiService.simpanFotoBaru(id_user).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -406,7 +412,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
 
                     if (idfoto == "1") {
                         bitmap1 = BitmapFactory.decodeStream(inputStream);
-                        foto.setImageBitmap(bitmap1);
+                        riv_foto.setImageBitmap(bitmap1);
 //                    } else if (idfoto == "2") {
 //                        bitmap2 = BitmapFactory.decodeStream(inputStream);
 //                        ijazah.setImageBitmap(bitmap2);
@@ -431,7 +437,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
                 Bundle extras = data.getExtras();
                 if (idfoto == "1") {
                     bitmap1 = (Bitmap) extras.get("data");
-                    foto.setImageBitmap(bitmap1);
+                    riv_foto.setImageBitmap(bitmap1);
                 }
 //                else if (idfoto == "2") {
 //                    bitmap2 = (Bitmap) extras.get("data");
