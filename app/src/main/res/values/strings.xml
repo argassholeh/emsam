@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EMSAM</string>
+    <string name="app_name">Sistem Pegawai</string>
     <string name="title_activity_utama">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
