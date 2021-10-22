@@ -24,7 +24,8 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
             tvx_ttl, tvx_nopengenal, tvx_status, tvx_nohp, tvx_alamat;
     ImageView img_detail, imgtoolbar;
     Button btn_cetak;
-    String id_user, nama, username, jabatan, tgltugas, ttl, pengenal, nopengenal, status, nohp, alamat, foto;
+    String id_user, nama, username, jabatan, tgltugas, ttl, pengenal, nopengenal, status, nohp, alamat, foto,
+    idjabatan, agama, jk, level, pendidikan, keterampilan, nobpjskesehatan, nobpjsketenaga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,16 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         tvx_nohp = findViewById(R.id.tv_nohp);
         tvx_alamat = findViewById(R.id.tv_alamat);
         img_detail = findViewById(R.id.img_detailfoto);
+
+        id_user = getIntent().getStringExtra("id_user");
+        idjabatan = getIntent().getStringExtra("id_jabatan");
+        agama = getIntent().getStringExtra("agama");
+        jk = getIntent().getStringExtra("jk");
+        level = getIntent().getStringExtra("level");
+        pendidikan = getIntent().getStringExtra("pendidikan");
+        keterampilan = getIntent().getStringExtra("keterampilan");
+        nobpjskesehatan = getIntent().getStringExtra("nobpjs_kesehatan");
+        nobpjsketenaga = getIntent().getStringExtra("nobpjs_ketenaga");
         id_user = getIntent().getStringExtra("id_user");
         nama = getIntent().getStringExtra("nama");
         username = getIntent().getStringExtra("username");
@@ -99,7 +110,32 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
 
         switch (v.getId()) {
             case R.id.tvSave:
-                Toast.makeText(this, "klik", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, ActivityKaryawan.class);
+                intent.putExtra("intent","ubah");
+                intent.putExtra("id_user",id_user);
+                intent.putExtra("nama",nama);
+                intent.putExtra("username",username);
+                intent.putExtra("id_jabatan",idjabatan);
+                intent.putExtra("jabatan","jabatan");
+                intent.putExtra("tanggaltugas",tgltugas);
+                intent.putExtra("ttl",ttl);
+                intent.putExtra("pengenal",pengenal);
+                intent.putExtra("nopengenal",nopengenal);
+                intent.putExtra("agama",agama);
+                intent.putExtra("jk",jk);
+                intent.putExtra("level",level);
+                intent.putExtra("pendidikan",pendidikan);
+                intent.putExtra("keterampilan",keterampilan);
+                intent.putExtra("nobpjs_kesehatan",nobpjskesehatan);
+                intent.putExtra("nobpjs_ketenaga",nobpjsketenaga);
+                intent.putExtra("status",status);
+                intent.putExtra("alamat",alamat);
+                intent.putExtra("nohp",nohp);
+                intent.putExtra("foto_karyawan",foto);
+
+                startActivity(intent);
+                finish();
                 break;
 
             default:

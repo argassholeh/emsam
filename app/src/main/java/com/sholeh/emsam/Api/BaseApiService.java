@@ -1,6 +1,7 @@
 package com.sholeh.emsam.Api;
 
 
+import com.sholeh.emsam.Model.ResponseJabatan;
 import com.sholeh.emsam.Model.ResponseKaryawan;
 
 import okhttp3.ResponseBody;
@@ -18,4 +19,7 @@ public interface BaseApiService {
 
     @GET("tampil-karyawan.php")
     Call<ResponseKaryawan> getKaryawan();
+
+    @GET("tampil-spinjabatan.php")
+    Call<ResponseJabatan> getsemuaJabatan();
 }

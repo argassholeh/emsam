@@ -98,11 +98,20 @@ public class AdapterKaryawan extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 intent.putExtra("id_user", String.valueOf(model.getIdUser()));
                 intent.putExtra("nama", String.valueOf(model.getNamaPekerja()));
                 intent.putExtra("username", model.getUsername());
+                intent.putExtra("id_jabatan", String.valueOf(model.getIdJabatan())); //
                 intent.putExtra("jabatan", String.valueOf(model.getJabatan()));
                 intent.putExtra("tanggaltugas", String.valueOf(model.getTglMulaitugas()));
                 intent.putExtra("ttl", String.valueOf(model.getTtl()));
                 intent.putExtra("pengenal", String.valueOf(model.getKartuPengenal()));
                 intent.putExtra("nopengenal", String.valueOf(model.getNomorPengenal()));
+                intent.putExtra("agama", String.valueOf(model.getAgama())); //
+                intent.putExtra("jk", String.valueOf(model.getJenisKelamin())); //
+                intent.putExtra("level", String.valueOf(model.getLevel())); //
+                intent.putExtra("pendidikan", String.valueOf(model.getPendidikan())); //
+                intent.putExtra("keterampilan", String.valueOf(model.getKeterampilan())); //
+                intent.putExtra("nobpjs_kesehatan", String.valueOf(model.getNoBpjskesehatan())); //
+                intent.putExtra("nobpjs_ketenaga", String.valueOf(model.getNoBpjsketenagakerjaan())); //
+
                 intent.putExtra("status", model.getStatus());
                 intent.putExtra("nohp", model.getNoHp());
                 intent.putExtra("alamat", String.valueOf(model.getAlamat()));
