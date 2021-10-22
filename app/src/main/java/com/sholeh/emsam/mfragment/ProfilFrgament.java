@@ -471,9 +471,13 @@ public class ProfilFrgament extends Fragment {
                    sertifikasi.setText(sKeterampilan);
                    kesehatan.setText(sKesehatan);
                    ketenagakerjaan.setText(sKetenagakerjaan);
+                   alamat.setText(sAlamat);
+                   tglmulai.setText(sTanggalMulai);
+                    Toast.makeText(getContext(), sKetenagakerjaan, Toast.LENGTH_SHORT).show();
                 
 
                 } else   {
+                    Toast.makeText(getContext(), "gagal"+response, Toast.LENGTH_SHORT).show();
 
                 }
             }
