@@ -257,7 +257,7 @@ public class ProfilFrgament extends Fragment {
             Font orderNumberFont = new Font(fontName, fontSize, Font.NORMAL, colorAccent);
 
             //format kesamping
-            addNewItemWithLeftAndRightSumItem(document, "JABATAN :", pekerja.getText().toString(), orderNumberFont, orderNumberValueFont);
+            addNewItemWithLeftAndRightSumItem(document, "JABATAN :", jabatan.getText().toString(), orderNumberFont, orderNumberValueFont);
             addLineSeperator(document);
 
             addNewItemWithLeftAndRightSumItem(document, "TEMPAT TANGGAL LAHIR :", ttl.getText().toString(), orderNumberFont, orderNumberValueFont);
