@@ -59,16 +59,17 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
             tvx_ttl, tvx_nopengenal, tvx_status, tvx_nohp, tvx_alamat, etPoster;
     ImageView imgchange, imgtoolbar;
     Button btn_cetak;
-    String id_user, idfoto,  nama, username, jabatan, tgltugas, ttl, pengenal, nopengenal, status, nohp, alamat, foto,
-    idjabatan, agama, jk, level, pendidikan, keterampilan, nobpjskesehatan, nobpjsketenaga;
+    String statusgambar, id_user, idfoto, nama, username, jabatan, tgltugas, ttl, pengenal, nopengenal, status, nohp, alamat, foto,
+            idjabatan, agama, jk, level, pendidikan, keterampilan, nobpjskesehatan, nobpjsketenaga;
     private static final int IMAGE = 100;
-    Bitmap bitmap;
+
+
     KAlertDialog pDialog;
     BaseApiService ApiService;
     private final int PICK_IMAGE = 12345;
     private final int TAKE_PICTURE = 6352;
     private static final int REQUEST_CAMERA_ACCESS_PERMISSION = 5674;
-    private Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
+    private Bitmap bitmap1, bitmap, scaleBitmap;
     private RoundedImageView riv_foto;
 
 
