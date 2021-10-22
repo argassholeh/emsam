@@ -141,32 +141,6 @@ public class ProfilActivity extends AppCompatActivity {
 
     }
 
-//    private void uploadimage() {
-//                Document doc = new Document();
-//                try {
-//                    PdfWriter.getInstance(doc, new FileOutputStream("ImageDemo.pdf"));
-//                    doc.open();
-//
-//                    // Creating image by file name
-//                    String filename = "other-sample/src/main/resources/java.gif";
-//                    Image image = Image.getInstance(filename);
-//                    doc.add(image);
-//
-//                    // The following line to prevent the "Server returned
-//                    // HTTP response code: 403" error.
-//                    System.setProperty("http.agent", "Chrome");
-//
-//                    // Creating image from a URL
-//                    String url = "https://kodejava.org/wp-content/uploads/2017/01/kodejava.png";
-//                    image = Image.getInstance(url);
-//                    doc.add(image);
-//                } catch (DocumentException | IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    doc.close();
-//                }
-//            }
-
     private void createPDFFile(String path) {
         if (new File(path).exists())
             new File(path).delete();
