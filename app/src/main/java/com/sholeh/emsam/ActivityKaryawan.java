@@ -1,9 +1,11 @@
 package com.sholeh.emsam;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.developer.kalert.KAlertDialog;
 import com.sholeh.emsam.Adapter.adapterspin;
 import com.sholeh.emsam.Api.BaseApiService;
 import com.sholeh.emsam.Api.UrlApi;
 import com.sholeh.emsam.Model.ResponseJabatan;
+import com.sholeh.emsam.Model.ResponseServer;
 
 import java.util.ArrayList;
 
@@ -49,6 +53,9 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
     ArrayList<String> listAgama = new ArrayList<>();
     ArrayList<String> listStatus = new ArrayList<>();
     ArrayList<String> listLevel = new ArrayList<>();
+    KAlertDialog pDialog;
+    Button btnUpdate;
+
 
 
     @Override
@@ -60,7 +67,7 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
         tvx_logout.setVisibility(View.GONE);
         ApiService = UrlApi.getAPIService();
 
-
+        btnUpdate = findViewById(R.id.btnSimpan);
         spinKartuPengenal = findViewById(R.id.spin_kartu);
         spinJabatan = findViewById(R.id.spin_jabatan);
         spinAgama = findViewById(R.id.spinagama);
@@ -124,15 +131,16 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
         isiAgama();
         isilevel();
         isistatus();
+        btnUpdate.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-//            case R.id.tvSave:
-//                Toast.makeText(this, "klik", Toast.LENGTH_SHORT).show();
-//                break;
+            case R.id.btnSimpan:
+                sendData();
+                break;
 
             default:
                 break;
@@ -207,6 +215,142 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
         ArrayAdapter<String> adapterStatus = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listLevel);
         adapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinLevel.setAdapter(adapterStatus);
+    }
+
+    private void sendData() {
+        nama = edNama.getText().toString();
+        jabatan = spinJabatan.getSelectedItem().toString();
+        tgltugas = edTglTugas.getText().toString();
+        ttl = edtttl.getText().toString();
+        nopengenal = edNoPengenal.getText().toString();
+         pendidikan = edPendidikan.getText().toString();
+        keterampilan = edKeterampilan.getText().toString();
+        nobpjskesehatan = edbpjsKesehatan.getText().toString();
+        nobpjsketenaga = edbpjsKetenagakerjaan.getText().toString();
+        nohp = ednohp.getText().toString();
+        alamat = edalamat.getText().toString();
+
+        spinJabatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinJabatan.getSelectedItem().equals("Pillih Jabatan")) {
+
+                } else {
+//                    getCity(listID_prov.get(position));
+//                    namaProvinsi = spinProvinsi.getSelectedItem().toString();
+//                    Toast.makeText(AddWargaActivity.this, "id: " + listID_kelurahan.get(position) + " kelurahan: " + spinKelurahan.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if (nama.isEmpty()) {
+            pDialog = new KAlertDialog(ActivityKaryawan.this, KAlertDialog.ERROR_TYPE);
+            pDialog.setTitleText("Oops...");
+            pDialog.setContentText("Harap masukkan data dengan benar! ");
+            pDialog.show();
+            Thread timer = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        sleep(1500);
+                        pDialog.cancel();
+                        super.run();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            };
+            timer.start();
+        } else {
+            requestUpdate();
+        }
+    }
+
+
+    private void requestUpdate() {
+        pDialog = new KAlertDialog(this, KAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        agama = spinAgama.getSelectedItem().toString();
+        status = spinStatus.getSelectedItem().toString();
+        level = spinLevel.getSelectedItem().toString();
+        pengenal = spinKartuPengenal.getSelectedItem().toString();
+        if (rbL.isChecked()) {
+            jk = "L";
+        }else{
+            jk = "P";
+        }
+        final String idjabatan_ = listID_jabatan.get(spinJabatan.getSelectedItemPosition());
+        ApiService.ubahKaryawan(id_user, nama, idjabatan_, tgltugas, ttl, pengenal, nopengenal, agama, jk, status,level, pendidikan,
+                keterampilan, nobpjskesehatan, edbpjsKetenagakerjaan.getText().toString(), nohp, alamat
+        ).enqueue(new Callback<ResponseServer>() {
+            @Override
+            public void onResponse(Call<ResponseServer> call, Response<ResponseServer> response) {
+                pDialog.dismissWithAnimation();
+                if (response.body().getMessage().equalsIgnoreCase("Berhasil di ubah")) {
+                    pDialog.dismissWithAnimation();
+//                    Intent intent = new Intent(ActvityKaryawan.this, FragmentMainRegister.class);
+//                    intent.putExtra("idnik", nik);
+//                    startActivity(intent);
+                    finish();
+
+
+                } else {
+                    pDialog.dismissWithAnimation();
+                    pDialog.dismissWithAnimation();
+                    pDialog = new KAlertDialog(ActivityKaryawan.this, KAlertDialog.ERROR_TYPE);
+                    pDialog.setTitleText("Oops...");
+                    pDialog.setContentText("Terjadi kesalahan dalam proses penambahan anggota, silahkan coba beberapa saat lagi.");
+                    pDialog.show();
+                    Thread timer = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                sleep(1500);
+                                pDialog.cancel();
+                                super.run();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    };
+                    timer.start();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseServer> call, Throwable t) {
+                pDialog.dismissWithAnimation();
+                pDialog = new KAlertDialog(ActivityKaryawan.this, KAlertDialog.ERROR_TYPE);
+                pDialog.setTitleText("Oops...");
+                pDialog.setContentText("Koneksi internet bermasalah!");
+                pDialog.show();
+                Thread timer = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            sleep(1500);
+                            pDialog.cancel();
+                            super.run();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                timer.start();
+            }
+        });
     }
 
 

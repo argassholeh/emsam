@@ -370,7 +370,6 @@
                             android:textSize="16dp"
                             android:layout_marginBottom="5dp"/>
                         <EditText
-                            android:maxLength="30"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:layout_width="match_parent"
@@ -392,13 +391,13 @@
                     android:layout_height="wrap_content">
                     <Button
                         android:layout_marginTop="5dp"
-                        android:id="@+id/btnSimpanAlamat"
+                        android:id="@+id/btnSimpan"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/rect1_2"
                         android:padding="15dp"
-                        android:text="Simpan"
+                        android:text="Update"
                         android:textColor="@color/white" />
                     <requestFocus/>
                 </LinearLayout>
