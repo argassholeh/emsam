@@ -227,7 +227,7 @@ public class ProfilFrgament extends Fragment {
             //create title of document
 
             Font titleFont = new Font(fontName, 36.0f, Font.NORMAL, BaseColor.BLACK);
-            addNewItem(document, nama.getText().toString(), Element.ALIGN_CENTER, titleFont);
+            addNewItem(document, pekerja.getText().toString(), Element.ALIGN_CENTER, titleFont);
 
             //format paragraf
             /*Font orderNumberFont = new Font(fontName, fontSize, Font.NORMAL, colorAccent);
