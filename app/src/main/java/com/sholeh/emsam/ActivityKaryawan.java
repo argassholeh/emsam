@@ -119,8 +119,6 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
         edbpjsKetenagakerjaan.setText(nobpjsketenaga);
         ednohp.setText(nohp);
         edalamat.setText(alamat);
-        Toast.makeText(this, ""+nohp, Toast.LENGTH_SHORT).show();
-
         getResultListJabatan();
         isiKartuPengenal();
         isiAgama();
