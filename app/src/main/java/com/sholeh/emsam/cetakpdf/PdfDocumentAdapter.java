@@ -73,7 +73,7 @@ public class PdfDocumentAdapter extends PrintDocumentAdapter {
 
         finally {
             try {
-                in.close();
+                 in.close();
                 out.close();
             }catch (IOException ex){
                 Log.e("TESTPRINT", ""+ex.getMessage());
