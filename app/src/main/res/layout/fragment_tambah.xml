@@ -56,7 +56,6 @@
                             android:id="@+id/edNama"
                             android:layout_marginBottom="15dp"
                             android:background="@drawable/round_spinner"/>
-                        <requestFocus/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -88,6 +87,7 @@
                             android:layout_marginBottom="5dp"/>
 
                         <EditText
+                            android:drawableRight="@drawable/ic_today"
                             android:maxLength="30"
                             android:inputType="textAutoCorrect"
                             android:paddingLeft="10dp"
@@ -150,7 +150,7 @@
 
                         <EditText
                             android:maxLength="30"
-                            android:inputType="textAutoCorrect"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:layout_width="match_parent"
@@ -312,7 +312,7 @@
 
                         <EditText
                             android:maxLength="30"
-                            android:inputType="textAutoCorrect"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:layout_width="match_parent"
@@ -333,7 +333,7 @@
 
                         <EditText
                             android:maxLength="30"
-                            android:inputType="textAutoCorrect"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:layout_width="match_parent"
@@ -354,7 +354,7 @@
 
                         <EditText
                             android:maxLength="30"
-                            android:inputType="textAutoCorrect"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:layout_width="match_parent"

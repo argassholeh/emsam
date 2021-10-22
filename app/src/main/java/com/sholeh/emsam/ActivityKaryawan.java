@@ -1,5 +1,7 @@
 package com.sholeh.emsam;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,11 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +30,10 @@ import com.sholeh.emsam.Api.UrlApi;
 import com.sholeh.emsam.Model.ResponseJabatan;
 import com.sholeh.emsam.Model.ResponseServer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,6 +62,11 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
     ArrayList<String> listLevel = new ArrayList<>();
     KAlertDialog pDialog;
     Button btnUpdate;
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
+    private SimpleDateFormat dateFormatter;
+
+
 
 
 
@@ -126,12 +138,14 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
         edbpjsKetenagakerjaan.setText(nobpjsketenaga);
         ednohp.setText(nohp);
         edalamat.setText(alamat);
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         getResultListJabatan();
         isiKartuPengenal();
         isiAgama();
         isilevel();
         isistatus();
         btnUpdate.setOnClickListener(this);
+        edTglTugas.setOnClickListener(this);
     }
 
     @Override
@@ -141,6 +155,12 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
             case R.id.btnSimpan:
                 sendData();
                 break;
+
+            case R.id.edtglTugas:
+                showDateDialog();
+                break;
+
+
 
             default:
                 break;
@@ -352,6 +372,37 @@ public class ActivityKaryawan extends AppCompatActivity implements View.OnClickL
                 timer.start();
             }
         });
+    }
+
+
+    private void showDateDialog() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                edTglTugas.setText(dateFormatter.format(newDate.getTime()));
+//                etTempat.requestFocus();
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
+    }
+
+    private void showTimeDialog() {
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+
+        timePickerDialog = new TimePickerDialog(ActivityKaryawan.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                etJam.setText(selectedHour + ":" + selectedMinute);
+//                etTempat.requestFocus();
+            }
+        }, hour, minute, true);
+        timePickerDialog.show();
     }
 
 

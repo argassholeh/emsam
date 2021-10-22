@@ -63,4 +63,10 @@ public interface BaseApiService {
                                       @Field("no_hp") String nohp,
                                       @Field("alamat") String alamaat);
 
+
+    @FormUrlEncoded
+    @POST("upload-foto.php")
+    Call<ResponseBody> simpanFotoBaru(@Field("id_user") String mId,
+                                          @Field("foto") String mPoster);
+
 }

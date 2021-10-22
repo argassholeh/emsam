@@ -4,6 +4,8 @@
 
 package com.sholeh.emsam.mfragment;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -32,7 +35,10 @@ import com.sholeh.emsam.Model.ResponseJabatan;
 import com.sholeh.emsam.Model.ResponseServer;
 import com.sholeh.emsam.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,6 +67,10 @@ public class TambahFrgament extends Fragment implements View.OnClickListener {
     ArrayList<String> listStatus = new ArrayList<>();
     ArrayList<String> listLevel = new ArrayList<>();
     KAlertDialog pDialog;
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
+    private SimpleDateFormat dateFormatter;
+
 
 
     @Nullable
@@ -107,7 +117,8 @@ public class TambahFrgament extends Fragment implements View.OnClickListener {
         isistatus();
 
         btnSimpan.setOnClickListener(this);
-
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        edTglTugas.setOnClickListener(this);
         return rootView;
     }
 
@@ -324,10 +335,30 @@ public class TambahFrgament extends Fragment implements View.OnClickListener {
                sendData();
                 break;
 
+            case R.id.edtglTugas:
+                showDateDialog();
+                break;
+
+
 
             default:
                 break;
         }
+    }
+
+    private void showDateDialog() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                edTglTugas.setText(dateFormatter.format(newDate.getTime()));
+//                etTempat.requestFocus();
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
     }
 }
 
