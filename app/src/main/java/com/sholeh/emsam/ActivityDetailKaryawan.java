@@ -1,21 +1,29 @@
 package com.sholeh.emsam;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -33,8 +41,30 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.developer.kalert.KAlertDialog;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.sholeh.emsam.Api.BaseApiService;
+import com.sholeh.emsam.cetakpdf.PdfDocumentAdapter;
+import com.sholeh.emsam.profil.Common;
+import com.sholeh.emsam.profil.ProfilActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -140,10 +170,12 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         tvx_status.setText(status);
         tvx_nohp.setText(nohp);
         tvx_alamat.setText(alamat);
-        Glide.with(ActivityDetailKaryawan.this)
-                .load(foto)
-                .apply(new RequestOptions().placeholder(R.mipmap.no_image).centerCrop())
-                .into(riv_foto);
+
+
+//        Glide.with(ActivityDetailKaryawan.this)
+//                .load(foto)
+//                .apply(new RequestOptions().placeholder(R.mipmap.no_image).centerCrop())
+//                .into(riv_foto);
 
 
         tvx_ubah.setOnClickListener(this);
@@ -153,7 +185,238 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         imgtoolbar.setOnClickListener(this);
         imgchange.setOnClickListener(this);
         riv_foto.setOnClickListener(this);
+
+        perizinanpdf();
     }
+
+    private void perizinanpdf() {
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        tvx_download.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+//                                uploadimage();
+                                createPDFFile(Common.getAppPath(ActivityDetailKaryawan.this) + "CreatePdf.pdf");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+
+                    }
+                })
+                .check();
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+        scaleBitmap = Bitmap.createScaledBitmap(bitmap, 1200, 518, false);
+
+        //permission
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void createPDFFile(String path) {
+        if (new File(path).exists())
+            new File(path).delete();
+        try {
+            Document document = new Document();
+            //save
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+            //open to write
+            document.open();
+
+            //setting
+
+//            Drawable d = getDrawable(R.drawable.ic_address);
+//            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap1.compress(Bitmap.CompressFormat.PNG, 50, stream);
+            byte[] bitmapData = stream.toByteArray();
+            Image image = Image.getInstance(bitmapData);
+            document.add(image);
+
+
+//            com.itextpdf.layout.element.Image image1 = new com.itextpdf.layout.element.Image(image);
+            document.setPageSize(PageSize.A4);
+            document.addCreationDate();
+            document.addAuthor("EMSAM");
+            document.addCreator("M. Sholehuddin");
+
+
+            //font setting
+            BaseColor colorAccent = new BaseColor(0, 153, 204, 255);
+            float fontSize = 15.0f;
+            float valueFontSize = 26.0f;
+
+
+            BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_bold.otf", "UTF-8", BaseFont.EMBEDDED);
+
+            //create title of document
+
+            Font titleFont = new Font(fontName, 36.0f, Font.NORMAL, BaseColor.BLACK);
+            addNewItem(document, nama, Element.ALIGN_CENTER, titleFont);
+
+            //format paragraf
+            /*Font orderNumberFont = new Font(fontName, fontSize, Font.NORMAL, colorAccent);
+            addNewItem(document, "Jabatan : ", Element.ALIGN_LEFT, orderNumberFont);
+
+
+            Font orderNumberValueFont = new Font(fontName, fontSize, Font.NORMAL, BaseColor.BLACK);
+            addNewItem(document, pekerja.getText().toString(), Element.ALIGN_LEFT, orderNumberValueFont);
+
+            addLineSeperator(document);
+
+             addNewItem(document, "Tanggal Mulai Tugas", Element.ALIGN_LEFT, orderNumberFont);
+            addNewItem(document, "11-12-2021", Element.ALIGN_LEFT, orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            addNewItem(document, "Kartu Pengenal", Element.ALIGN_LEFT, orderNumberFont);
+            addNewItem(document, sim.getText().toString(), Element.ALIGN_LEFT, orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            */
+
+
+            //font untuk header dan sub
+            Font orderNumberValueFont = new Font(fontName, fontSize, Font.NORMAL, BaseColor.BLACK);
+            Font orderNumberFont = new Font(fontName, fontSize, Font.NORMAL, colorAccent);
+
+            //format kesamping
+            addNewItemWithLeftAndRightSumItem(document, "JABATAN :", jabatan, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "TEMPAT TANGGAL LAHIR :", ttl, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "NOMOR HP :", nohp, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "ALAMAT :", alamat, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "TANGGAL MULAI TUGAS :", tgltugas, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "KARTU PENGENAL :", pengenal, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "AGAMA :", nopengenal, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "JENIS KELAMIN :", jk, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "STATUS :", status, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRightSumItem(document, "PENDIDIKAN FORMAL :", pendidikan, orderNumberFont, orderNumberValueFont);
+            addLineSeperator(document);
+
+//            addNewItemWithLeftAndRightSumItem(document, "SERTIFIKASI / KETERAMPILAN :", sertifikasi.getText().toString(), orderNumberFont, orderNumberValueFont);
+//            addLineSeperator(document);
+
+//            addNewItemWithLeftAndRightSumItem(document, "NOMOR KEPESERTAAN BPJS KESEHATAN :", kesehatan.getText().toString(), orderNumberFont, orderNumberValueFont);
+//            addLineSeperator(document);
+//
+//            addNewItemWithLeftAndRightSumItem(document, "NOMOR KEPESERTAAAN BPJS KETENAGAKERJAAN :", ketenagakerjaan.getText().toString(), orderNumberFont, orderNumberValueFont);
+//            addLineSeperator(document);
+
+            addNewItem(document, "SERTIFIKASI / KETERAMPILAN :", Element.ALIGN_LEFT, orderNumberFont);
+            addNewItem(document, keterampilan, Element.ALIGN_LEFT, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItem(document, "NOMOR KEPESERTAAN BPJS KESEHATAN :", Element.ALIGN_LEFT, orderNumberFont);
+            addNewItem(document, nobpjskesehatan, Element.ALIGN_LEFT, orderNumberValueFont);
+            addLineSeperator(document);
+
+            addNewItem(document, "NOMOR KEPESERTAAN BPJS KETENAGAKERJAAN :", Element.ALIGN_LEFT, orderNumberFont);
+            addNewItem(document, nobpjsketenaga, Element.ALIGN_LEFT, orderNumberValueFont);
+            addLineSeperator(document);
+
+
+            document.close();
+
+            Toast.makeText(this, "SUKSES", Toast.LENGTH_SHORT).show();
+
+            printPDF();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void printPDF() {
+        PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+        try {
+            PrintDocumentAdapter printDocumentAdapter = new PdfDocumentAdapter(ActivityDetailKaryawan.this, Common.getAppPath(ActivityDetailKaryawan.this) + "CreatePdf.pdf");
+            printManager.print("document", printDocumentAdapter, new PrintAttributes.Builder().build());
+
+        } catch (Exception ex) {
+            Log.e("TEST", "" + ex.getMessage());
+
+        }
+    }
+
+    private void addNewItemWithLeftAndRight(Document document, String textleft, String textright, Font textleftFont, Font textrightFont) throws DocumentException {
+        Chunk chunkTextLeft = new Chunk(textleft, textleftFont);
+        Chunk chunkTextRight = new Chunk(textright, textrightFont);
+        Paragraph p = new Paragraph(chunkTextLeft);
+        p.add(new Chunk(new VerticalPositionMark()));
+        p.add(chunkTextRight);
+        document.add(p);
+
+    }
+
+
+    private void addNewItemWithLeftAndRightSumItem(Document document, String textleft, String textright, Font textleftFont, Font textrightFont) throws DocumentException {
+        Chunk chunkTextLeft = new Chunk(textleft, textleftFont);
+        Chunk chunkTextRight = new Chunk(textright, textrightFont);
+        Paragraph p = new Paragraph(chunkTextLeft);
+        p.add(new Chunk(new VerticalPositionMark()));
+        p.add(chunkTextRight);
+        document.add(p);
+
+    }
+
+    private void addLineSeperator(Document document) throws DocumentException {
+        LineSeparator lineSeparator = new LineSeparator();
+        lineSeparator.setLineColor(new BaseColor(0, 0, 0, 68));
+        addLineSpace(document);
+        document.add(new Chunk(lineSeparator));
+        addLineSpace(document);
+    }
+
+    private void addLineSpace(Document document) throws DocumentException {
+        document.add(new Paragraph(""));
+
+    }
+
+    private void addNewItem(Document document, String text, int align, Font font) throws DocumentException {
+        Chunk chunk = new Chunk(text, font);
+        Paragraph paragraph = new Paragraph(chunk);
+        paragraph.setAlignment(align);
+        document.add(paragraph);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -161,27 +424,27 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         switch (v.getId()) {
             case R.id.tvSave:
                 Intent intent = new Intent(this, ActivityKaryawan.class);
-                intent.putExtra("intent","ubah");
-                intent.putExtra("id_user",id_user);
-                intent.putExtra("nama",nama);
-                intent.putExtra("username",username);
-                intent.putExtra("id_jabatan",idjabatan);
-                intent.putExtra("jabatan","jabatan");
-                intent.putExtra("tanggaltugas",tgltugas);
-                intent.putExtra("ttl",ttl);
-                intent.putExtra("pengenal",pengenal);
-                intent.putExtra("nopengenal",nopengenal);
-                intent.putExtra("agama",agama);
-                intent.putExtra("jk",jk);
-                intent.putExtra("level",level);
-                intent.putExtra("pendidikan",pendidikan);
-                intent.putExtra("keterampilan",keterampilan);
-                intent.putExtra("nobpjs_kesehatan",nobpjskesehatan);
-                intent.putExtra("nobpjs_ketenaga",nobpjsketenaga);
-                intent.putExtra("status",status);
-                intent.putExtra("alamat",alamat);
-                intent.putExtra("nohp",nohp);
-                intent.putExtra("foto_karyawan",foto);
+                intent.putExtra("intent", "ubah");
+                intent.putExtra("id_user", id_user);
+                intent.putExtra("nama", nama);
+                intent.putExtra("username", username);
+                intent.putExtra("id_jabatan", idjabatan);
+                intent.putExtra("jabatan", "jabatan");
+                intent.putExtra("tanggaltugas", tgltugas);
+                intent.putExtra("ttl", ttl);
+                intent.putExtra("pengenal", pengenal);
+                intent.putExtra("nopengenal", nopengenal);
+                intent.putExtra("agama", agama);
+                intent.putExtra("jk", jk);
+                intent.putExtra("level", level);
+                intent.putExtra("pendidikan", pendidikan);
+                intent.putExtra("keterampilan", keterampilan);
+                intent.putExtra("nobpjs_kesehatan", nobpjskesehatan);
+                intent.putExtra("nobpjs_ketenaga", nobpjsketenaga);
+                intent.putExtra("status", status);
+                intent.putExtra("alamat", alamat);
+                intent.putExtra("nohp", nohp);
+                intent.putExtra("foto_karyawan", foto);
 
                 startActivity(intent);
                 finish();
@@ -332,6 +595,8 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(ActivityDetailKaryawan.this, "BUKA KAMERA", Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                         && ActivityCompat.checkSelfPermission(ActivityDetailKaryawan.this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -422,15 +687,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
                     if (idfoto == "1") {
                         bitmap1 = BitmapFactory.decodeStream(inputStream);
                         riv_foto.setImageBitmap(bitmap1);
-//                    } else if (idfoto == "2") {
-//                        bitmap2 = BitmapFactory.decodeStream(inputStream);
-//                        ijazah.setImageBitmap(bitmap2);
-//                    } else if (idfoto == "3") {
-//                        bitmap3 = BitmapFactory.decodeStream(inputStream);
-//                        kk.setImageBitmap(bitmap3);
-//                    } else if (idfoto == "4") {
-//                        bitmap4 = BitmapFactory.decodeStream(inputStream);
-//                        ktp.setImageBitmap(bitmap4);
+                        Toast.makeText(this, "masuk Foto", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Pilih Foto", Toast.LENGTH_SHORT).show();
                     }
@@ -448,16 +705,6 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
                     bitmap1 = (Bitmap) extras.get("data");
                     riv_foto.setImageBitmap(bitmap1);
                 }
-//                else if (idfoto == "2") {
-//                    bitmap2 = (Bitmap) extras.get("data");
-//                    ijazah.setImageBitmap(bitmap2);
-//                } else if (idfoto == "3") {
-//                    bitmap3 = (Bitmap) extras.get("data");
-//                    kk.setImageBitmap(bitmap3);
-//                } else if (idfoto == "4") {
-//                    bitmap4 = (Bitmap) extras.get("data");
-//                    ktp.setImageBitmap(bitmap4);
-//                }
 //                bitmap = (Bitmap) extras.get("data");
 
             }
@@ -477,6 +724,10 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 
 
 }
