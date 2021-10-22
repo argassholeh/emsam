@@ -8,9 +8,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,6 +32,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.developer.kalert.KAlertDialog;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -51,12 +55,18 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.sholeh.emsam.ActivityDetailKaryawan;
 import com.sholeh.emsam.ActivityLogin;
+import com.sholeh.emsam.Api.BaseApiService;
+import com.sholeh.emsam.Api.UrlApi;
 import com.sholeh.emsam.Helper.Preferences;
+import com.sholeh.emsam.Model.ResponseKaryawan;
+import com.sholeh.emsam.Model.ResponseProfil;
 import com.sholeh.emsam.R;
 import com.sholeh.emsam.cetakpdf.PdfDocumentAdapter;
 import com.sholeh.emsam.profil.Common;
 import com.sholeh.emsam.profil.ProfilActivity;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,6 +76,13 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class ProfilFrgament extends Fragment {
     private KProgressHUD progressDialogHud;
@@ -73,7 +90,7 @@ public class ProfilFrgament extends Fragment {
     ImageView imgtoolbar;
     TextView tvxTitle;
 
-    private TextView nama, pekerja, tglmulai, ttl, sim, nomorkartupengenal, agama, jeniskelamin,
+    private TextView nama, username, jabatan, pekerja, tglmulai, ttl, sim, nomorkartupengenal, agama, jeniskelamin,
             status, formal, sertifikasi, kesehatan, ketenagakerjaan, nohp, alamat;
     private FloatingActionButton download, print;
 
@@ -84,6 +101,16 @@ public class ProfilFrgament extends Fragment {
     DateFormat dateFormat;
 
     ImageView imageView;
+    BaseApiService ApiService;
+    KAlertDialog pDialog;
+    private ResponseProfil tvDatkaryawan;
+    String sNama, sHp, sUsername, sAlamat, sJabatan, sTanggalMulai, sTtl, sPengenal, sNoKartu, sAgama, sJk, sStatus,
+    sPendidikan, sKeterampilan, sKesehatan, sKetenagakerjaan ;
+
+
+
+
+    CollapsingToolbarLayout title;
 
 
     @Nullable
@@ -93,8 +120,9 @@ public class ProfilFrgament extends Fragment {
         progressDialogHud = KProgressHUD.create(getActivity());
         preferences = new Preferences(getActivity());
 
-
-        nama = rootView.findViewById(R.id.tvnamapekerja);
+        title = rootView.findViewById(R.id.collapsing_toolbar);
+        username = rootView.findViewById(R.id.tvusername);
+        jabatan = rootView.findViewById(R.id.tvjabatan);
         pekerja = rootView.findViewById(R.id.tvnamapekerja);
         tglmulai = rootView.findViewById(R.id.tvtglmulai);
         ttl = rootView.findViewById(R.id.tvttl);
@@ -148,6 +176,8 @@ public class ProfilFrgament extends Fragment {
         //permission
         ActivityCompat.requestPermissions(getActivity(), new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+        ApiService = UrlApi.getAPIService();
+        getDataProfil();
 
         return rootView;
     }
@@ -398,8 +428,61 @@ public class ProfilFrgament extends Fragment {
         alert.show();
     }
 
+    private void getDataProfil() {
+        ApiService.tampilProfil(preferences.getSP_IdPengguna()).enqueue(new Callback<ResponseProfil>() {
+            @Override
+            public void onResponse(Call<ResponseProfil> call, Response<ResponseProfil> response) {
+                if (response.isSuccessful()) {
+                    tvDatkaryawan = response.body();
+                    int count_data = tvDatkaryawan.getProfilkaryawan().size();
+                   for (int a = 0; a <= count_data - 1; a++) {
+                        sNama =  response.body().getProfilkaryawan().get(a).getNamaPekerja();
+                        sHp =  response.body().getProfilkaryawan().get(a).getNoHp();
+                        sUsername =  response.body().getProfilkaryawan().get(a).getUsername();
+                        sAlamat =  response.body().getProfilkaryawan().get(a).getAlamat();
+                        sJabatan =  response.body().getProfilkaryawan().get(a).getJabatan();
+                        sTanggalMulai =  response.body().getProfilkaryawan().get(a).getTglMulaitugas();
+                        sTtl =  response.body().getProfilkaryawan().get(a).getTtl();
+                        sPengenal =  response.body().getProfilkaryawan().get(a).getKartuPengenal();
+                        sNoKartu =  response.body().getProfilkaryawan().get(a).getNomorPengenal();
+                        sAgama =  response.body().getProfilkaryawan().get(a).getAgama();
+                        sJk =  response.body().getProfilkaryawan().get(a).getJenisKelamin();
+                        sStatus =  response.body().getProfilkaryawan().get(a).getStatus();
+                        sPendidikan =  response.body().getProfilkaryawan().get(a).getPendidikan();
+                        sKeterampilan =  response.body().getProfilkaryawan().get(a).getKeterampilan();
+                        sKesehatan=  response.body().getProfilkaryawan().get(a).getNoBpjskesehatan();
+                        sKetenagakerjaan=  response.body().getProfilkaryawan().get(a).getNoBpjsketenagakerjaan();
 
+                    }
 
+                    pekerja.setText(sNama);
+                   title.setTitle(String.valueOf(sNama));
+                   nohp.setText(sHp);
+                   username.setText(sUsername);
+                   jabatan.setText(sJabatan);
+                   ttl.setText(sTtl);
+                   sim.setText(sPengenal);
+                   nomorkartupengenal.setText(sNoKartu);
+                   agama.setText(sAgama);
+                   jeniskelamin.setText(sJk);
+                   status.setText(sStatus);
+                   formal.setText(sPendidikan);
+                   sertifikasi.setText(sKeterampilan);
+                   kesehatan.setText(sKesehatan);
+                   ketenagakerjaan.setText(sKetenagakerjaan);
+                
+
+                } else   {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProfil> call, Throwable t) {
+
+            }
+        });
+    }
 
 
 }

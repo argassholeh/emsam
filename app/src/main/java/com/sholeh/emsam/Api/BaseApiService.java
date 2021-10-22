@@ -3,6 +3,7 @@ package com.sholeh.emsam.Api;
 
 import com.sholeh.emsam.Model.ResponseJabatan;
 import com.sholeh.emsam.Model.ResponseKaryawan;
+import com.sholeh.emsam.Model.ResponseProfil;
 import com.sholeh.emsam.Model.ResponseServer;
 
 import okhttp3.ResponseBody;
@@ -67,5 +68,9 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("upload-foto.php")
     Call<ResponseBody> simpanFotoBaru(@Field("id_user") String mId);
+
+    @FormUrlEncoded
+    @POST("tampil-profil.php")
+    Call<ResponseProfil> tampilProfil(@Field("id_user") String mId);
 
 }

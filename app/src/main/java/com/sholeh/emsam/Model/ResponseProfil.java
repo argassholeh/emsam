@@ -1,20 +1,18 @@
 package com.sholeh.emsam.Model;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class ResponseJabatan {
-
+public class ResponseProfil {
     @SerializedName("error")
     @Expose
     private Boolean error;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("semuajabatan")
+    @SerializedName("profilkaryawan")
     @Expose
-    private List<ItemJabatan> semuajabatan = null;
+    private List<ItemProfil> profilkaryawan = null;
 
     public Boolean getError() {
         return error;
@@ -32,13 +30,11 @@ public class ResponseJabatan {
         this.message = message;
     }
 
-    public List<ItemJabatan> getSemuajabatan() {
-        return semuajabatan;
+    public List<ItemProfil> getProfilkaryawan() {
+        return profilkaryawan;
     }
 
-    public void setSemuajabatan(List<ItemJabatan> semuajabatan) {
-        this.semuajabatan = semuajabatan;
+    public void setProfilkaryawan(List<ItemProfil> profilkaryawan) {
+        this.profilkaryawan = profilkaryawan;
     }
-
-
 }
