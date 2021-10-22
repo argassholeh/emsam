@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,11 +29,12 @@
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:text="Name"
+                android:text="Nama Pekerja"
                 android:layout_toRightOf="@id/nameImageView"
                 style="@style/profileDetailsTextMain" />
 
             <TextView
+                android:id="@+id/tvnamapekerja"
                 android:text="developer"
                 android:layout_toRightOf="@id/nameImageView"
                 style="@style/profileDetailsMiniText" />
@@ -48,12 +49,13 @@
                 style="@style/profileDetailsImage" />
 
             <TextView
-                android:text="Mobile"
+                android:text="Nomor HP"
                 android:layout_toRightOf="@id/mobileImageView"
                 style="@style/profileDetailsTextMain"/>
 
             <TextView
-                android:text="+91-8129999999"
+                android:id="@+id/tvnohp"
+                android:text="+628999999"
                 android:layout_toRightOf="@id/mobileImageView"
                 style="@style/profileDetailsMiniText" />
 
@@ -67,12 +69,13 @@
                 style="@style/profileDetailsImage" />
 
             <TextView
-                android:text="Email"
+                android:text="Username"
                 android:layout_toRightOf="@id/emailImageView"
                 style="@style/profileDetailsTextMain" />
 
             <TextView
-                android:text="developer@appsnipp.com"
+                android:id="@+id/tvusername"
+                android:text="sholehuddin@gmail.com"
                 android:layout_toRightOf="@id/emailImageView"
                 style="@style/profileDetailsMiniText" />
 
@@ -86,11 +89,12 @@
                 style="@style/profileDetailsImage" />
 
             <TextView
-                android:text="Address"
+                style="@style/profileDetailsTextMain"
                 android:layout_toRightOf="@id/addressImageView"
-                style="@style/profileDetailsTextMain" />
+                android:text="Alamat" />
 
             <TextView
+                android:id="@+id/tvalamat"
                 android:text="Avenue 2nd Street NW SY."
                 android:layout_toRightOf="@id/addressImageView"
                 style="@style/profileDetailsMiniText" />
@@ -100,24 +104,247 @@
         <View style="@style/proifleDetailsView" />
         <RelativeLayout style="@style/profileDetailsLayout">
             <ImageView
-                android:id="@+id/dobImageView"
+                android:id="@+id/gambar1"
                 android:src="@drawable/ic_dob"
                 style="@style/profileDetailsImage" />
 
             <TextView
-                android:text="D.O.B"
-                android:layout_toRightOf="@id/dobImageView"
+                android:text="Jabatan"
+                android:layout_toRightOf="@id/gambar1"
                 style="@style/profileDetailsTextMain" />
 
             <TextView
-                android:text="12-05-1990"
-                android:layout_toRightOf="@id/dobImageView"
+                android:id="@+id/tvjabatan"
+                android:text="TEK COTEK"
+                android:layout_toRightOf="@id/gambar1"
                 style="@style/profileDetailsMiniText" />
 
         </RelativeLayout>
 
         <View style="@style/proifleDetailsView" />
 
-    </LinearLayout>
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar2"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
 
-</android.support.v4.widget.NestedScrollView>
+            <TextView
+                android:text="Tanggal Mulai Tugas"
+                android:layout_toRightOf="@id/gambar2"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvtglmulai"
+                android:text="12-05-1990"
+                android:layout_toRightOf="@id/gambar2"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar3"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Tempat Tanggal Lahir"
+                android:layout_toRightOf="@id/gambar3"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvttl"
+                android:text="Probolinggo, 12-05-1990"
+                android:layout_toRightOf="@id/gambar3"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar4"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="SIM / KTP"
+                android:layout_toRightOf="@id/gambar4"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvsim"
+                android:text="SIM"
+                android:layout_toRightOf="@id/gambar4"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar5"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Nomor Kartu Pengenal"
+                android:layout_toRightOf="@id/gambar5"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvnopengenal"
+                android:text="3513171206980003"
+                android:layout_toRightOf="@id/gambar5"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar6"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Agama"
+                android:layout_toRightOf="@id/gambar6"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvagama"
+                android:text="Islam"
+                android:layout_toRightOf="@id/gambar6"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar7"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Jenis Kelamin"
+                android:layout_toRightOf="@id/gambar7"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvjk"
+                android:text="Laki Laki"
+                android:layout_toRightOf="@id/gambar7"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar8"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Status"
+                android:layout_toRightOf="@id/gambar8"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvstatus"
+                android:text="PKWT"
+                android:layout_toRightOf="@id/gambar8"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar9"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:id="@+id/tvformal"
+                android:text="Pendidikan Formal"
+                android:layout_toRightOf="@id/gambar9"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:text="SMK"
+                android:layout_toRightOf="@id/gambar9"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar10"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Sertifikasi / Keterampilan"
+                android:layout_toRightOf="@id/gambar10"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvsertifikat"
+                android:text="SERTIFIKAT TARIK TAMBANG"
+                android:layout_toRightOf="@id/gambar10"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/gambar11"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Nomor Kepesertaan BPJS Kesehatan"
+                android:layout_toRightOf="@id/gambar11"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvkesehatan"
+                android:text="100121001"
+                android:layout_toRightOf="@id/gambar11"
+                style="@style/profileDetailsMiniText" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+    <RelativeLayout style="@style/profileDetailsLayout">
+        <ImageView
+            android:id="@+id/gambar12"
+            android:src="@drawable/ic_dob"
+            style="@style/profileDetailsImage" />
+
+        <TextView
+            android:text="Nomor Kepesertaan BPJS Ketenagakerjaan"
+            android:layout_toRightOf="@id/gambar12"
+            style="@style/profileDetailsTextMain" />
+
+        <TextView
+            android:id="@+id/tvketenagakerjaan"
+            android:text="0001139158506"
+            android:layout_toRightOf="@id/gambar12"
+            style="@style/profileDetailsMiniText" />
+
+    </RelativeLayout>
+
+    <View style="@style/proifleDetailsView" />
+</LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

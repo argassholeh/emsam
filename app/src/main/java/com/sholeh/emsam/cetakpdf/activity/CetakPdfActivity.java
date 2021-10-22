@@ -15,5 +15,7 @@ public class CetakPdfActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cetak_pdf);
 
         AndroidNetworking.initialize(getApplicationContext());
+
+
     }
 }
