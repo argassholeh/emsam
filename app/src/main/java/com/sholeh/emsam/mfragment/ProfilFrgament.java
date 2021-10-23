@@ -84,11 +84,11 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class ProfilFrgament extends Fragment {
+public class ProfilFrgament extends Fragment implements View.OnClickListener {
     private KProgressHUD progressDialogHud;
     Preferences preferences;
     ImageView imgtoolbar;
-    TextView tvxTitle;
+    TextView tvxTitle, keluar;
 
     private TextView nama, username, jabatan, pekerja, tglmulai, ttl, sim, nomorkartupengenal, agama, jeniskelamin,
             status, formal, sertifikasi, kesehatan, ketenagakerjaan, nohp, alamat;
@@ -119,6 +119,9 @@ public class ProfilFrgament extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profil,container,false);
         progressDialogHud = KProgressHUD.create(getActivity());
         preferences = new Preferences(getActivity());
+
+        keluar = rootView.findViewById(R.id.logout_akun);
+        keluar.setOnClickListener(this);
 
         title = rootView.findViewById(R.id.collapsing_toolbar);
         username = rootView.findViewById(R.id.tvusername);
@@ -490,5 +493,13 @@ public class ProfilFrgament extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.logout_akun:
+                logoutAkun();
+                
+        }
+    }
 }
 

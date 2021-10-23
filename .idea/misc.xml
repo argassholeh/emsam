@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/bg_shape.xml" value="0.2755208333333333" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/ic_baseline_fastfood_24.xml" value="0.2755208333333333" />
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/ic_exit.xml" value="0.2755208333333333" />
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/ic_keluar.xml" value="0.2755208333333333" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/ic_person.xml" value="0.2755208333333333" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/drawable/profile_back_button.xml" value="0.2755208333333333" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/activity_detail_karyawan.xml" value="0.259375" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/activity_profil.xml" value="0.264" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/activity_update_karyawan.xml" value="0.259375" />
+        <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/activity_utama.xml" value="0.259375" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/camera_dialog.xml" value="0.259375" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/content_profile.xml" value="0.4" />
         <entry key="..\:/REPOSITORY/emsam/app/src/main/res/layout/fragment_home.xml" value="0.259375" />
