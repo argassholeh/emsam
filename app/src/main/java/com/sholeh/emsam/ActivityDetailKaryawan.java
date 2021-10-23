@@ -704,6 +704,7 @@ public class ActivityDetailKaryawan extends AppCompatActivity implements View.On
                 if (idfoto == "1") {
                     bitmap1 = (Bitmap) extras.get("data");
                     riv_foto.setImageBitmap(bitmap1);
+
                 }
 //                bitmap = (Bitmap) extras.get("data");
 
